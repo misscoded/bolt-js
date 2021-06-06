@@ -81,6 +81,7 @@ export interface AppOptions {
   socketMode?: boolean;
   developerMode?: boolean;
   tokenVerificationEnabled?: boolean;
+  timeout?: number;
 }
 
 export { LogLevel, Logger } from '@slack/logger';
@@ -203,6 +204,7 @@ export default class App {
     ignoreSelf = true,
     clientOptions = undefined,
     processBeforeResponse = false,
+    timeout = 0,
     clientId = undefined,
     clientSecret = undefined,
     stateSecret = undefined,
@@ -212,7 +214,7 @@ export default class App {
     socketMode = undefined,
     developerMode = false,
     tokenVerificationEnabled = true,
-  }: AppOptions = {}) {
+  }: AppOptions = {}) {    
     // this.logLevel = logLevel;
     this.developerMode = developerMode;
     if (developerMode) {
@@ -267,6 +269,7 @@ export default class App {
     this.axios = axios.create({
       httpAgent: agent,
       httpsAgent: agent,
+      timeout,
       ...clientTls,
     });
 
